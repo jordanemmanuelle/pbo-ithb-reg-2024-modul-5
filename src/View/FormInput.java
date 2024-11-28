@@ -7,17 +7,22 @@ import Model.Enum.StatusKawin;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.io.File;
+import javax.swing.ImageIcon;
 
 public class FormInput extends JFrame {
-    private JTextField txtNik, txtNama, txtTempatLahir, txtAlamat, txtRtRw, txtKelDesa, txtKecamatan, txtBerlaku, txtKotaPembuatan;
+    private JTextField txtNik, txtNama, txtTempatLahir, txtTanggalLahir, txtAlamat, txtRtRw, txtKelDesa, txtKecamatan, txtBerlaku, txtKotaPembuatan;
     private JRadioButton rbPria, rbWanita;
     private JComboBox<Agama> cbAgama;
     private JComboBox<StatusKawin> cbStatus;
-    private JButton btnSubmit;
+    private JButton btnSubmit, btnFoto, btnTandaTangan;
+    private JLabel lblFoto, lblTandaTangan;
+    private String fotoPath = "", tandaTanganPath = "";
 
     public FormInput() {
         setTitle("Form Input Data Penduduk");
-        setSize(600, 600);
+        setSize(600, 700);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panel = new JPanel();
@@ -37,6 +42,11 @@ public class FormInput extends JFrame {
         txtTempatLahir = new JTextField();
         panel.add(lblTempatLahir);
         panel.add(txtTempatLahir);
+
+        JLabel lblTanggalLahir = new JLabel("Tanggal Lahir: ");
+        txtTanggalLahir = new JTextField();
+        panel.add(lblTanggalLahir);
+        panel.add(txtTanggalLahir);
 
         JLabel lblJenisKelamin = new JLabel("Jenis Kelamin:");
         rbPria = new JRadioButton("Pria");
@@ -90,6 +100,20 @@ public class FormInput extends JFrame {
         panel.add(lblBerlaku);
         panel.add(txtBerlaku);
 
+        JLabel lblFotoLabel = new JLabel("Foto:");
+        panel.add(lblFotoLabel);
+        btnFoto = new JButton("Pilih Foto");
+        panel.add(btnFoto);
+        lblFoto = new JLabel();
+        panel.add(lblFoto); // tempat menampilkan foto
+
+        JLabel lblTandaTanganLabel = new JLabel("Tanda Tangan:");
+        panel.add(lblTandaTanganLabel);
+        btnTandaTangan = new JButton("Pilih Tanda Tangan");
+        panel.add(btnTandaTangan);
+        lblTandaTangan = new JLabel();
+        panel.add(lblTandaTangan); // tempat menampilkan tanda tangan
+
         btnSubmit = new JButton("Submit");
         btnSubmit.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -97,6 +121,7 @@ public class FormInput extends JFrame {
                 model.setNik(txtNik.getText());
                 model.setNama(txtNama.getText());
                 model.setTempatLahir(txtTempatLahir.getText());
+                model.setTanggalLahir(txtTanggalLahir.getText());
                 model.setAlamat(txtAlamat.getText());
                 model.setRtrw(txtRtRw.getText());
                 model.setKelDesa(txtKelDesa.getText());
@@ -104,6 +129,10 @@ public class FormInput extends JFrame {
                 model.setKotaPembuatan(txtKotaPembuatan.getText());
                 model.setAgama((Agama) cbAgama.getSelectedItem());
                 model.setStatusKawin((StatusKawin) cbStatus.getSelectedItem());
+
+                // nyimpen foto dan ttd
+                model.setFotoPath(fotoPath);
+                model.setTandaTanganPath(tandaTanganPath);
 
                 if (model.getNik().isEmpty() || model.getNama().isEmpty() || model.getAlamat().isEmpty()) {
                     JOptionPane.showMessageDialog(FormInput.this, "Data tidak boleh kosong!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -114,8 +143,36 @@ public class FormInput extends JFrame {
                 }
             }
         });
-        
+
         panel.add(btnSubmit);
+
+        btnFoto.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileFilter(new FileNameExtensionFilter("Foto KTP", "jpg", "png", "jpeg"));
+                int result = fileChooser.showOpenDialog(FormInput.this);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    fotoPath = selectedFile.getAbsolutePath();
+                    ImageIcon imageIcon = new ImageIcon(fotoPath);
+                    lblFoto.setIcon(imageIcon);
+                }
+            }
+        });
+
+        btnTandaTangan.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser fileChooser = new JFileChooser();
+                fileChooser.setFileFilter(new FileNameExtensionFilter("Foto TTD", "jpg", "png", "jpeg"));
+                int result = fileChooser.showOpenDialog(FormInput.this);
+                if (result == JFileChooser.APPROVE_OPTION) {
+                    File selectedFile = fileChooser.getSelectedFile();
+                    tandaTanganPath = selectedFile.getAbsolutePath();
+                    ImageIcon imageIcon = new ImageIcon(tandaTanganPath);
+                    lblTandaTangan.setIcon(imageIcon);
+                }
+            }
+        });
 
         add(panel);
         setVisible(true);

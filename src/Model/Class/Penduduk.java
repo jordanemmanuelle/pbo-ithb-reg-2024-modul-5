@@ -23,7 +23,9 @@ public class Penduduk {
     private Date berlakuHingga;
     private String kotaPembuatan;
     private String tanggalPembuatan;
-    private Date TanggalLahir;
+    private String tanggalLahir;
+    private String fotoPath;
+    private String tandaTanganPath;
     
     public String getNik() {
         return nik;
@@ -121,12 +123,23 @@ public class Penduduk {
     public void setTanggalPembuatan(String tanggalPembuatan) {
         this.tanggalPembuatan = tanggalPembuatan;
     }
-    public Date getTanggalLahir() {
-        return TanggalLahir;
+    public String getTanggalLahir() {
+        return tanggalLahir;
     }
-    public void setTanggalLahir(Date tanggalLahir) {
-        TanggalLahir = tanggalLahir;
+    public void setTanggalLahir(String tanggalLahir) {
+        this.tanggalLahir = tanggalLahir;
+    }
+    public String getFotoPath() { 
+        return fotoPath; 
+    }
+    public void setFotoPath(String fotoPath) { 
+        this.fotoPath = fotoPath; 
     }
 
-    
+    public String getTandaTanganPath() { 
+        return tandaTanganPath; 
+    }
+    public void setTandaTanganPath(String tandaTanganPath) { 
+        this.tandaTanganPath = tandaTanganPath; 
+    }
 }

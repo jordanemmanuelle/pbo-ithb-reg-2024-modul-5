@@ -20,8 +20,6 @@ public class HasilKTP extends JFrame {
         lblNama.setBounds(20, 80, 300, 20);
         panel.add(lblNama);
 
-        // Add the rest of the fields similarly
-
         setVisible(true);
     }
 }

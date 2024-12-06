@@ -71,6 +71,6 @@ public class HasilKTP extends JFrame {
         panel.add(lblTandaTangan);
 
         add(panel);
-        setVisible(true);
+        setVisible(true); 
     }
 }
